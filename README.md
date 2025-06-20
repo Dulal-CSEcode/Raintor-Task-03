@@ -1,38 +1,155 @@
-# User Feed Infinite Scroll
+# ♾️ Infinite Scroll - User Feed
 
-This project implements an infinite scroll user feed with real-time API integration, virtualization, and accessibility features.
+![Demo Animation](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd2bW5tZ3VkYjFmZ2V6b3RqY2VjZGN4b2R6eGJtYzB1dWZ0dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMHxhOfscxPfIfm/giphy.gif)
 
-## Features
-- Infinite scroll with paginated API fetching
-- Virtualized list for large data sets (`react-window`)
-- User cards with accessible keyboard navigation
-- Skeleton loader and spinner for loading states
-- Error boundary and graceful fallback UI
-- Built with React, TypeScript, and React Query
+A performant infinite scrolling user feed with React Query and virtualization, featuring smooth loading states and full accessibility support.
 
-## Setup
+[![Live Demo](https://img.shields.io/badge/-View%20Demo-blue?style=for-the-badge&logo=vercel&logoColor=white)](https://your-demo-url.vercel.app)
+[![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the development server:
-   ```bash
-   npm start
-   ```
+## ✨ Features
 
-## API
-- Endpoint: `https://tech-test.raintor.com/api/users/GetUsersList?take=10&skip=0`
-- Pagination: `take` (page size), `skip` (offset)
+- **Infinite Scrolling** - Automatically loads more users on scroll
+- **Virtualized List** - Optimized performance with react-window
+- **Skeleton Loaders** - Smooth loading experience
+- **Error Handling** - Graceful fallback UI
+- **Accessibility** - Keyboard nav & ARIA attributes
+- **Responsive Design** - Works on all devices
 
-## Accessibility
-- User cards are focusable and navigable by keyboard
-- Proper ARIA labels and roles for screen readers
+## 🛠 Tech Stack
 
-## Customization
-- Adjust `PAGE_SIZE` in `App.tsx` for different page sizes
-- Style user cards in `App.css` and `UserCard.tsx`
+![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+![React Query](https://img.shields.io/badge/-React%20Query-FF4154?logo=reactquery&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
----
+- **Core**: React 18
+- **State**: React Query (TanStack)
+- **Virtualization**: react-window
+- **Styling**: Tailwind CSS
+- **API**: Axios
 
-© 2024 Raintor Tech Test 
+## 📂 Project Structure
+
+```bash
+src/
+├── components/
+│   ├── UserCard/           # User profile component
+│   │   ├── UserCard.tsx
+│   │   ├── UserCardSkeleton.tsx
+│   │   └── styles.module.css
+│   ├── UserList/           # Infinite scroll logic
+│   │   ├── VirtualizedList.tsx
+│   │   └── useInfiniteUsers.ts
+│   └── ErrorBoundary.tsx   # Error handling
+├── hooks/
+│   └── useIntersectionObserver.ts
+├── services/
+│   └── api.ts              # API configuration
+├── App.tsx
+└── main.tsx
+```
+## 🚀 Quick Start
+Prerequisites
+Node.js ≥ v18
+
+npm or yarn
+
+Installation
+```bash
+git clone https://github.com/yourusername/infinite-scroll-user-feed.git
+cd infinite-scroll-user-feed
+npm install
+```
+Running the App
+```bash
+npm run dev
+```
+Open http://localhost:3000 in your browser.
+
+## 🔗 API Integration
+Endpoint:
+
+```bash
+GET https://tech-test.raintor.com/api/users/GetUsersList?take=10&skip=0
+```
+Sample Response:
+```bash
+json
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Emily",
+      "lastName": "Johnson",
+      "email": "emily.johnson@x.dummyjson.com",
+      "phone": "+81 965-431-3024",
+      "image": "https://dummyjson.com/icon/emilys/128",
+      "university": "University of Wisconsin--Madison",
+      "company": {
+        "title": "Sales Manager"
+      }
+    }
+  ],
+  "total": 208,
+  "skip": 0,
+  "limit": 10
+}
+```
+## 🧩 Key Components
+useInfiniteUsers Hook
+```bash
+typescript
+export const useInfiniteUsers = () => {
+  return useInfiniteQuery({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+    getNextPageParam: (lastPage) => {
+      const nextSkip = lastPage.skip + lastPage.limit;
+      return nextSkip < lastPage.total ? nextSkip : undefined;
+    }
+  });
+};
+```
+Virtualized List
+```bash
+<List
+  height={600}
+  itemCount={itemCount}
+  itemSize={120}
+  width="100%"
+>
+  {({ index, style }) => (
+    <div style={style}>
+      {index === users.length ? (
+        <div ref={loadMoreRef}><UserCardSkeleton /></div>
+      ) : (
+        <UserCard user={users[index]} />
+      )}
+    </div>
+  )}
+</List>
+```
+## 📦 Dependencies
+```bash
+npm install @tanstack/react-query react-window axios
+```
+## 🌐 Environment Variables
+Create .env file:
+
+```bash
+REACT_APP_API_URL=https://tech-test.raintor.com/api
+```
+## 🖼 Screenshots
+Loading State	Active Feed
+https://loading-state.png	https://active-feed.png
+## 🛠️ Advanced Features
+Retry Logic: Exponential backoff for failed requests
+
+Search: Filter users by name/email
+
+Tests: Jest + React Testing Library
+
+Error Boundaries: Component-level error handling
+
+## 📄 License
+MIT License © 2025 [MD Dulal Hossain]
