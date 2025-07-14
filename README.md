@@ -1,6 +1,6 @@
 # ♾️ Infinite Scroll - User Feed
 
-A performant infinite scrolling user feed with React Query and virtualization, featuring smooth loading states and full accessibility support.
+A performant infinite scrolling user feed with React Query and virtualization, featuring smooth loading states and full accessibility support..
 
 [![Live Demo](https://img.shields.io/badge/-View%20Demo-blue?style=for-the-badge&logo=vercel&logoColor=white)](https://your-demo-url.vercel.app)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
